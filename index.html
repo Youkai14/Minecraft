@@ -15,15 +15,15 @@
   canvas { display: block; }
   #look { position: fixed; inset: 0; z-index: 1; display: none; }
   #crosshair {
-    position: fixed; left: 50%; top: 50%; width: 20px; height: 20px;
-    margin: -10px 0 0 -10px; z-index: 5; pointer-events: none;
+    position: fixed; left: 50%; top: 50%; width: 22px; height: 22px;
+    margin: -11px 0 0 -11px; z-index: 5; pointer-events: none;
   }
   #crosshair::before, #crosshair::after {
-    content: ''; position: absolute; background: rgba(255,255,255,.85);
-    box-shadow: 0 0 2px rgba(0,0,0,.8);
+    content: ''; position: absolute; background: rgba(255,255,255,.9);
+    box-shadow: 0 0 3px rgba(0,0,0,.9);
   }
-  #crosshair::before { left: 9px; top: 0; width: 2px; height: 20px; }
-  #crosshair::after  { top: 9px; left: 0; height: 2px; width: 20px; }
+  #crosshair::before { left: 10px; top: 0; width: 2px; height: 22px; }
+  #crosshair::after  { top: 10px; left: 0; height: 2px; width: 22px; }
   #info {
     position: fixed; top: 10px; left: 50%; transform: translateX(-50%);
     z-index: 5; color: #fff; font-size: 12px; padding: 6px 12px;
@@ -35,73 +35,102 @@
     color: #fff; font-size: 12px; padding: 6px 10px;
     background: rgba(0,0,0,.5); border-radius: 8px;
   }
-  #status.ok { background: rgba(40,150,60,.8); }
-  #status.bad { background: rgba(180,40,40,.8); }
+  #status.ok { background: rgba(40,150,60,.85); }
+  #status.bad { background: rgba(180,40,40,.85); }
+
   #hotbar {
     position: fixed; bottom: 12px; left: 50%; transform: translateX(-50%);
-    display: flex; gap: 6px; z-index: 5;
+    display: grid; gap: 6px; z-index: 5;
+    grid-template-columns: repeat(8, 42px);
   }
   #hotbar div {
     width: 42px; height: 42px; border-radius: 6px;
     border: 2px solid rgba(255,255,255,.35);
     background: rgba(0,0,0,.35);
     background-size: cover; image-rendering: pixelated;
+    transition: transform .08s, border-color .08s;
   }
-  #hotbar div.on { border-color: #fff; transform: scale(1.1); }
+  #hotbar div.on { border-color: #fff; transform: scale(1.12); box-shadow: 0 0 8px rgba(255,255,255,.6); }
+
   #stick {
-    position: fixed; left: 22px; bottom: 90px; width: 130px; height: 130px;
-    border-radius: 50%; background: rgba(255,255,255,.15);
-    border: 2px solid rgba(255,255,255,.35); z-index: 6; display: none;
+    position: fixed; left: 20px; bottom: 100px; width: 140px; height: 140px;
+    border-radius: 50%; background: rgba(255,255,255,.12);
+    border: 2px solid rgba(255,255,255,.3); z-index: 6; display: none;
+    box-shadow: inset 0 0 20px rgba(0,0,0,.3);
   }
   #knob {
-    position: absolute; left: 50%; top: 50%; width: 56px; height: 56px;
-    margin: -28px 0 0 -28px; border-radius: 50%;
-    background: rgba(255,255,255,.6);
+    position: absolute; left: 50%; top: 50%; width: 60px; height: 60px;
+    margin: -30px 0 0 -30px; border-radius: 50%;
+    background: radial-gradient(circle at 35% 30%, rgba(255,255,255,.95), rgba(180,200,255,.7));
+    box-shadow: 0 2px 8px rgba(0,0,0,.4);
   }
+
   .btn {
     position: fixed; z-index: 6; display: none;
-    width: 76px; height: 76px; border-radius: 50%;
-    border: 2px solid rgba(255,255,255,.5);
-    background: rgba(0,0,0,.4); color: #fff;
-    font-weight: 700; font-size: 12px;
+    border-radius: 50%;
+    border: 2px solid rgba(255,255,255,.55);
+    background: rgba(0,0,0,.45); color: #fff;
+    font-weight: 800; font-size: 13px;
+    box-shadow: 0 4px 12px rgba(0,0,0,.35);
+    letter-spacing: .5px;
   }
-  #placeBtn { right: 24px; bottom: 110px; }
-  #breakBtn { right: 110px; bottom: 60px; }
-  #cycleBtn { right: 24px; bottom: 200px; width: 56px; height: 56px; font-size: 11px; }
+  .btn:active { transform: scale(.92); background: rgba(60,120,220,.7); }
+
+  #jumpBtn {
+    left: 175px; bottom: 118px; width: 90px; height: 90px; font-size: 15px;
+    background: rgba(50,140,60,.55);
+    border-color: rgba(120,240,140,.7);
+  }
+  #placeBtn { right: 22px; bottom: 100px; width: 82px; height: 82px;
+    background: rgba(50,110,200,.55); border-color: rgba(120,180,255,.7); }
+  #breakBtn { right: 118px; bottom: 60px; width: 82px; height: 82px;
+    background: rgba(190,60,60,.55); border-color: rgba(255,140,140,.7); }
+  #cycleBtn { right: 22px; bottom: 195px; width: 60px; height: 60px; font-size: 11px; }
+
   #menu {
     position: fixed; inset: 0; z-index: 20;
     display: flex; flex-direction: column; align-items: center; justify-content: center;
-    gap: 12px; background: rgba(10,20,40,.94); color: #fff; padding: 20px;
+    gap: 12px; background: linear-gradient(160deg, #0b1730 0%, #142a4a 100%); color: #fff; padding: 20px;
   }
-  #menu h1 { font-size: 32px; letter-spacing: 1px; }
+  #menu h1 { font-size: 34px; letter-spacing: 1px; text-shadow: 0 2px 8px rgba(0,0,0,.6); }
   #menu input {
-    padding: 12px 16px; border-radius: 10px; border: 1px solid #456;
-    background: #12203a; color: #fff; font-size: 16px; text-align: center; width: 260px;
+    padding: 13px 16px; border-radius: 10px; border: 2px solid #2d4668;
+    background: #0e1e34; color: #fff; font-size: 16px; text-align: center; width: 270px;
+    outline: none;
   }
+  #menu input:focus { border-color: #4b8bff; }
   #menu button {
     padding: 14px 44px; border-radius: 10px; border: 0;
-    background: #3b8bff; color: #fff; font-size: 17px; font-weight: 700;
-    cursor: pointer;
+    background: linear-gradient(180deg, #4b9bff, #2a6bcc); color: #fff;
+    font-size: 18px; font-weight: 800; cursor: pointer;
+    box-shadow: 0 4px 14px rgba(60,140,255,.4);
+    letter-spacing: .5px;
   }
-  #menu p { color: #9ab; font-size: 13px; max-width: 340px; text-align: center; line-height: 1.5; }
-  #menu .hint { color: #6cf; font-size: 12px; }
+  #menu p { color: #8fa5c4; font-size: 13px; max-width: 340px; text-align: center; line-height: 1.6; }
+  #menu .hint { color: #6cf; }
+
+  @media (max-width: 640px) {
+    #hotbar { grid-template-columns: repeat(8, 36px); bottom: 8px; }
+    #hotbar div { width: 36px; height: 36px; }
+  }
 </style>
 </head>
 <body>
 
 <div id="look"></div>
 <div id="crosshair"></div>
-<div id="info">WASD · Space · Linksklick Abbauen · Rechtsklick Setzen · 1-5 Block</div>
+<div id="info">WASD · Space Springen · Linksklick Abbauen · Rechtsklick Setzen · 1-8 Block</div>
 <div id="status" style="display:none">Verbinde...</div>
 
 <div id="hotbar">
-  <div data-b="1"></div><div data-b="2"></div><div data-b="3"></div>
-  <div data-b="4"></div><div data-b="5"></div>
+  <div data-b="1"></div><div data-b="2"></div><div data-b="3"></div><div data-b="4"></div>
+  <div data-b="5"></div><div data-b="6"></div><div data-b="7"></div><div data-b="8"></div>
 </div>
 
 <div id="stick"><div id="knob"></div></div>
-<button class="btn" id="placeBtn">PLATZIEREN</button>
-<button class="btn" id="breakBtn">ABBAUEN</button>
+<button class="btn" id="jumpBtn">▲ SPRUNG</button>
+<button class="btn" id="placeBtn">SETZEN</button>
+<button class="btn" id="breakBtn">ABBAU</button>
 <button class="btn" id="cycleBtn">BLOCK</button>
 
 <div id="menu">
@@ -109,7 +138,7 @@
   <input id="nameInput" maxlength="14" placeholder="Dein Name">
   <input id="roomInput" maxlength="20" placeholder="Raum-Code (z.B. liebe123)">
   <button id="playBtn">Spielen</button>
-  <p>Gebt <b>beide den gleichen Raum-Code</b> ein, um euch zu sehen.<br>Probiert: <span class="hint">liebe123</span></p>
+  <p>Gebt <b>beide den gleichen Raum-Code</b> ein.<br>Probiert: <span class="hint">liebe123</span></p>
 </div>
 
 <script src="https://unpkg.com/three@0.160.0/build/three.min.js"></script>
@@ -128,48 +157,152 @@
   const kb = { fwd: 0, strafe: 0, jump: false, sprint: false };
   const tc = { fwd: 0, strafe: 0 };
   const keys = {};
-  let selected = 3;
+  let selected = 1;
 
   const world = {};
-  const others = new Map(); // id -> { group, target, yaw, lastSeen, name }
+  const others = new Map();
   let myId = 'p' + Math.random().toString(36).slice(2, 9);
   let myName = 'Spieler';
   let mqttClient = null;
   let roomTopic = null;
   let lastBroadcast = 0;
 
-  // -------- Texturen --------
+  // ============ TEXTUREN ============
+  // Atlas: 4 Spalten x 4 Reihen = 16 Tiles, jede 16x16 px
   function makeAtlas() {
     const atlas = document.createElement('canvas');
-    atlas.width = 64; atlas.height = 32;
+    atlas.width = 64; atlas.height = 64;
     const ctx = atlas.getContext('2d');
 
-    function noise(x, y, base, shades, count) {
+    // Basis-Rauschen mit 2 Farbebenen für Tiefe
+    function noise(x, y, base, shades, count, smallCount) {
       ctx.fillStyle = base;
       ctx.fillRect(x, y, 16, 16);
       for (let i = 0; i < count; i++) {
         ctx.fillStyle = shades[Math.floor(Math.random() * shades.length)];
-        ctx.fillRect(x + Math.floor(Math.random() * 16), y + Math.floor(Math.random() * 16), 1, 1);
+        const px = x + Math.floor(Math.random() * 16);
+        const py = y + Math.floor(Math.random() * 16);
+        ctx.fillRect(px, py, 1, 1);
+      }
+      if (smallCount) {
+        for (let i = 0; i < smallCount; i++) {
+          ctx.fillStyle = shades[0];
+          ctx.globalAlpha = 0.35;
+          ctx.fillRect(x + Math.floor(Math.random()*16), y + Math.floor(Math.random()*16), 1, 1);
+        }
+        ctx.globalAlpha = 1;
       }
     }
 
-    noise(0, 0, '#57b847', ['#4aa83c', '#61c951', '#529f43'], 120);
-    noise(16, 0, '#8c6642', ['#7a5738', '#9a7048', '#6f4e31'], 90);
-    ctx.fillStyle = '#57b847';
-    ctx.fillRect(16, 0, 16, 4);
-    for (let i = 0; i < 12; i++) ctx.fillRect(16 + Math.floor(Math.random() * 16), 4, 1, 1);
-    noise(32, 0, '#8c6642', ['#7a5738', '#9a7048', '#6f4e31'], 130);
-    noise(48, 0, '#8c8c94', ['#7a7a82', '#9a9aa2', '#6f6f77'], 130);
-    noise(0, 16, '#8b6b3f', ['#7a5c34', '#9a7a4a'], 60);
-    ctx.fillStyle = '#5c4526';
-    for (let yy = 16; yy < 32; yy += 4) ctx.fillRect(0, yy, 16, 1);
-    noise(16, 16, '#389e42', ['#2f8a39', '#42b04c', '#266f2e'], 180);
-    noise(32, 16, '#e0d29a', ['#d4c58e', '#ecdfa8', '#c8b982'], 130);
-    noise(48, 16, '#8c8c94', ['#7a7a82', '#9a9aa2', '#6f6f77'], 130);
-    const spots = [[51, 19], [57, 21], [53, 26], [59, 27], [55, 23]];
-    for (const s of spots) {
-      ctx.fillStyle = '#5ee6e6'; ctx.fillRect(s[0], s[1], 2, 2);
-      ctx.fillStyle = '#a8f7f7'; ctx.fillRect(s[0], s[1], 1, 1);
+    function pixel(x, y, color) {
+      ctx.fillStyle = color;
+      ctx.fillRect(x, y, 1, 1);
+    }
+
+    // ---- 0: Gras oben ----
+    noise(0, 0, '#5cb850', ['#4aa63e', '#6cc95a', '#3f9435', '#7dd96a'], 150, 60);
+    for (let i = 0; i < 8; i++) {
+      pixel(0 + Math.floor(Math.random()*16), 0 + Math.floor(Math.random()*16), '#2e7d28');
+    }
+
+    // ---- 1: Gras Seite ----
+    noise(16, 0, '#8a6440', ['#7a5738', '#9a7048', '#6f4e31', '#a87950'], 130, 40);
+    ctx.fillStyle = '#5cb850';
+    ctx.fillRect(16, 0, 16, 3);
+    for (let i = 0; i < 16; i++) {
+      ctx.fillStyle = ['#4aa63e','#6cc95a','#3f9435'][Math.floor(Math.random()*3)];
+      ctx.fillRect(16 + i, 3, 1, 1 + Math.floor(Math.random()*2));
+    }
+
+    // ---- 2: Erde ----
+    noise(32, 0, '#8a6440', ['#7a5738', '#9a7048', '#6f4e31', '#a87950', '#5d3f28'], 160, 50);
+
+    // ---- 3: Stein ----
+    noise(48, 0, '#8a8a92', ['#7a7a82', '#9a9aa2', '#6f6f77', '#a5a5ad'], 180, 70);
+    // ein paar dunkle Risse
+    for (let i = 0; i < 3; i++) {
+      let rx = 48 + Math.floor(Math.random()*14), ry = Math.floor(Math.random()*14);
+      for (let j = 0; j < 4; j++) {
+        pixel(rx, ry, '#565660');
+        rx++; ry += Math.random() < 0.5 ? 0 : 1;
+        if (rx > 63 || ry > 15) break;
+      }
+    }
+
+    // ---- 4: Holz (Baumstamm) ----
+    noise(0, 16, '#8b6b3f', ['#7a5c34', '#9a7a4a', '#6a4e2c'], 90, 20);
+    // vertikale Rindenlinien
+    ctx.fillStyle = '#5a4224';
+    ctx.fillRect(0, 16, 16, 1); // Rand oben
+    for (let yy = 17; yy < 32; yy += 4) ctx.fillRect(0, yy, 16, 1);
+    // dunkle Punkte
+    for (let i = 0; i < 10; i++) pixel(Math.floor(Math.random()*16), 16 + Math.floor(Math.random()*16), '#4a3518');
+
+    // ---- 5: Blätter ----
+    // dichter, dunkler Hintergrund
+    noise(16, 16, '#2e8a34', ['#267a2c', '#3ba042', '#1e6a24', '#4ab04c'], 220, 80);
+    // kleine Löcher
+    for (let i = 0; i < 6; i++) pixel(16 + Math.floor(Math.random()*16), 16 + Math.floor(Math.random()*16), '#1a4a1e');
+
+    // ---- 6: Sand ----
+    noise(32, 16, '#e0d29a', ['#d4c58e', '#ecdfa8', '#c8b982', '#f0e5b0'], 170, 60);
+    // kleine dunkle Flecken
+    for (let i = 0; i < 4; i++) pixel(32 + Math.floor(Math.random()*16), 16 + Math.floor(Math.random()*16), '#a89660');
+
+    // ---- 7: Bruchstein ----
+    noise(48, 16, '#7a7a80', ['#6a6a70', '#8a8a90', '#5a5a60', '#95959a'], 170, 60);
+    // unregelmäßige helle Steine
+    const stoneRects = [[49,17,4,3],[55,18,3,4],[51,23,5,3],[58,22,3,3],[49,27,3,3],[56,28,4,3]];
+    for (const [sx, sy, sw, sh] of stoneRects) {
+      ctx.fillStyle = 'rgba(160,160,168,0.6)';
+      ctx.fillRect(sx, sy, sw, sh);
+      ctx.strokeStyle = 'rgba(70,70,76,0.8)';
+      ctx.lineWidth = 1;
+      ctx.strokeRect(sx + 0.5, sy + 0.5, sw - 1, sh - 1);
+    }
+
+    // ---- 8: Bretter ----
+    noise(0, 32, '#b58a4e', ['#a87a3e', '#c69a5e', '#956c30', '#d0a870'], 120, 30);
+    // Bretterfugen
+    ctx.fillStyle = '#6a4a22';
+    ctx.fillRect(0, 36, 16, 1);
+    ctx.fillRect(0, 43, 16, 1);
+    ctx.fillRect(0, 32, 16, 1);
+    // vertikale Fugen versetzt
+    ctx.fillRect(7, 32, 1, 4);
+    ctx.fillRect(3, 37, 1, 3);
+    ctx.fillRect(11, 37, 1, 3);
+    ctx.fillRect(6, 44, 1, 4);
+
+    // ---- 9: Ziegel ----
+    noise(16, 32, '#a04530', ['#903a28', '#b05038', '#802f20'], 140, 40);
+    // Ziegelmuster
+    ctx.fillStyle = '#5a1e14';
+    ctx.fillRect(16, 32, 16, 1);
+    for (let row = 0; row < 4; row++) {
+      const ry = 32 + row * 4;
+      ctx.fillRect(16, ry + 3, 16, 1);
+      const offset = row % 2 === 0 ? 0 : 4;
+      ctx.fillRect(16 + offset, ry, 1, 4);
+      ctx.fillRect(16 + offset + 8, ry, 1, 4);
+    }
+
+    // ---- 10: Kies ----
+    noise(32, 32, '#888688', ['#7a787a', '#989698', '#6a686a', '#a5a3a5'], 200, 60);
+    const gravelRocks = [[33,34,2,2],[37,33,2,2],[41,35,2,2],[35,38,3,2],[40,40,2,3],[44,37,2,2],[34,42,2,2],[43,44,2,2]];
+    for (const [gx, gy, gw, gh] of gravelRocks) {
+      ctx.fillStyle = 'rgba(180,180,182,0.5)';
+      ctx.fillRect(gx, gy, gw, gh);
+    }
+
+    // ---- 11: Gold-Erz ----
+    noise(48, 32, '#8a8a92', ['#7a7a82', '#9a9aa2', '#6f6f77', '#a5a5ad'], 160, 50);
+    const goldSpots = [[50,34],[56,36],[52,39],[58,42],[51,44],[57,45],[54,33]];
+    for (const [gx, gy] of goldSpots) {
+      pixel(gx, gy, '#ffd84a');
+      pixel(gx+1, gy, '#ffea80');
+      pixel(gx, gy+1, '#d4a820');
+      pixel(gx+1, gy+1, '#ffd84a');
     }
 
     const tex = new THREE.CanvasTexture(atlas);
@@ -182,12 +315,16 @@
   const ATLAS = makeAtlas();
   const atlas = ATLAS.texture;
 
+  // Blockdefinitionen: 0-11 Tiles im Atlas (Reihe 1: 0-3, Reihe 2: 4-7, Reihe 3: 8-11)
   const BLOCK_TYPES = {
-    1: { name: 'Gras',    top: 0, side: 1, bottom: 2 },
-    2: { name: 'Erde',    all: 2 },
-    3: { name: 'Stein',   all: 3 },
-    4: { name: 'Holz',    all: 4 },
-    5: { name: 'Blätter', all: 5 },
+    1: { name: 'Gras',       top: 0, side: 1, bottom: 2 },
+    2: { name: 'Erde',       all: 2 },
+    3: { name: 'Stein',      all: 3 },
+    4: { name: 'Holz',       top: 4, side: 4, bottom: 4 },
+    5: { name: 'Blätter',    all: 5 },
+    6: { name: 'Sand',       all: 6 },
+    7: { name: 'Bruchstein', all: 7 },
+    8: { name: 'Bretter',    all: 8 },
   };
 
   const FACES = [
@@ -205,7 +342,7 @@
     return world[x + ',' + y + ',' + z] || 0;
   }
 
-  // -------- Weltgenerierung (immer gleich pro Raum) --------
+  // ============ WELT ============
   function seedRandom(seed) {
     let s = 0;
     for (let i = 0; i < seed.length; i++) s = (s * 31 + seed.charCodeAt(i)) >>> 0;
@@ -257,11 +394,11 @@
     }
   }
 
-  // -------- Setup --------
+  // ============ SETUP ============
   function boot() {
     scene = new THREE.Scene();
     scene.background = new THREE.Color(0x8fc8ff);
-    scene.fog = new THREE.Fog(0x8fc8ff, 40, 90);
+    scene.fog = new THREE.Fog(0x8fc8ff, 45, 95);
 
     camera = new THREE.PerspectiveCamera(75, innerWidth / innerHeight, 0.1, 400);
     camera.rotation.order = 'YXZ';
@@ -272,14 +409,14 @@
     document.body.appendChild(renderer.domElement);
 
     highlight = new THREE.LineSegments(
-      new THREE.EdgesGeometry(new THREE.BoxGeometry(1.004, 1.004, 1.004)),
-      new THREE.LineBasicMaterial({ color: 0x000000, transparent: true, opacity: 0.5 })
+      new THREE.EdgesGeometry(new THREE.BoxGeometry(1.008, 1.008, 1.008)),
+      new THREE.LineBasicMaterial({ color: 0x000000, transparent: true, opacity: 0.6 })
     );
     highlight.visible = false;
     scene.add(highlight);
 
-    scene.add(new THREE.AmbientLight(0xffffff, 0.75));
-    const sun = new THREE.DirectionalLight(0xffffff, 0.7);
+    scene.add(new THREE.AmbientLight(0xffffff, 0.78));
+    const sun = new THREE.DirectionalLight(0xffffff, 0.65);
     sun.position.set(50, 100, 30);
     scene.add(sun);
 
@@ -308,11 +445,11 @@
     renderer.setSize(innerWidth, innerHeight);
   }
 
-  // -------- Meshing --------
+  // ============ MESHING ============
   function rebuild() {
     const pos = [], nor = [], uv = [], ind = [];
     let vi = 0;
-    const TU = 1 / 4, TV = 1 / 2;
+    const TU = 1 / 4, TV = 1 / 4;
 
     for (const key in world) {
       const parts = key.split(',');
@@ -362,12 +499,12 @@
       terrain.material.dispose();
     }
     terrain = new THREE.Mesh(g, new THREE.MeshStandardMaterial({
-      map: atlas, roughness: 0.9, metalness: 0.05
+      map: atlas, roughness: 0.95, metalness: 0.02
     }));
     scene.add(terrain);
   }
 
-  // -------- Physik --------
+  // ============ PHYSIK ============
   function collides() {
     const hw = 0.3, hh = 1.8;
     const x0 = Math.floor(P.x - hw), x1 = Math.floor(P.x + hw);
@@ -417,7 +554,7 @@
     if (P.y < -20) { P.y = WORLD_HEIGHT - 2; P.vy = 0; }
   }
 
-  // -------- Ziel & Interaktion --------
+  // ============ INTERAKTION ============
   function targetBlock() {
     raycaster.setFromCamera({ x: 0, y: 0 }, camera);
     const hits = raycaster.intersectObject(terrain);
@@ -471,19 +608,22 @@
     setBlock(t.placePos.x, t.placePos.y, t.placePos.z, selected);
   }
 
-  // -------- Andere Spieler --------
+  // ============ CHARAKTERE ============
   function colorFromId(id) {
     let h = 0;
     for (let i = 0; i < id.length; i++) h = (h * 31 + id.charCodeAt(i)) % 360;
-    return new THREE.Color().setHSL(h / 360, 0.6, 0.5).getHex();
+    return new THREE.Color().setHSL(h / 360, 0.65, 0.55).getHex();
   }
 
   function makeTag(text) {
     const c = document.createElement('canvas');
     c.width = 256; c.height = 64;
     const ctx = c.getContext('2d');
-    ctx.fillStyle = 'rgba(0,0,0,0.6)';
+    ctx.fillStyle = 'rgba(0,0,0,0.65)';
     ctx.fillRect(0, 0, 256, 64);
+    ctx.strokeStyle = 'rgba(255,255,255,0.3)';
+    ctx.lineWidth = 2;
+    ctx.strokeRect(1, 1, 254, 62);
     ctx.font = 'bold 30px sans-serif';
     ctx.fillStyle = '#fff';
     ctx.textAlign = 'center';
@@ -492,28 +632,99 @@
     const spr = new THREE.Sprite(new THREE.SpriteMaterial({
       map: new THREE.CanvasTexture(c), depthTest: false, transparent: true
     }));
-    spr.scale.set(1.7, 0.42, 1);
-    spr.position.y = 2.15;
+    spr.scale.set(1.8, 0.45, 1);
+    spr.position.y = 2.35;
     return spr;
   }
 
-  function createOther(id, name, x, y, z, yaw) {
-    const g = new THREE.Group();
-    const color = colorFromId(id);
-    const body = new THREE.Mesh(
-      new THREE.BoxGeometry(0.6, 1.2, 0.35),
-      new THREE.MeshBasicMaterial({ color: color })
-    );
-    body.position.y = 0.6;
-    const head = new THREE.Mesh(
-      new THREE.BoxGeometry(0.5, 0.5, 0.5),
-      new THREE.MeshBasicMaterial({ color: 0xe8b48c })
-    );
-    head.position.y = 1.45;
-    g.add(body, head, makeTag(name || 'Spieler'));
-    g.position.set(x, y, z);
-    scene.add(g);
-    return { group: g, target: new THREE.Vector3(x, y, z), yaw: yaw || 0, lastSeen: Date.now(), name: name };
+  // Minecraft-artiger Charakter: Kopf + Körper + 2 Arme + 2 Beine, mit Animation
+  function makeCharacter(id, name) {
+    const group = new THREE.Group();
+    const skinColor = colorFromId(id);
+    const skinDark = new THREE.Color(skinColor).multiplyScalar(0.75).getHex();
+    const skinLight = new THREE.Color(skinColor).multiplyScalar(1.15).getHex();
+    const pantsColor = 0x2c3e6a;
+    const shoesColor = 0x1a1a1a;
+
+    const mat = (c) => new THREE.MeshLambertMaterial({ color: c });
+
+    // Körper (Torso)
+    const torso = new THREE.Mesh(new THREE.BoxGeometry(0.52, 0.72, 0.30), mat(skinColor));
+    torso.position.y = 1.14;
+    group.add(torso);
+
+    // Kopf
+    const head = new THREE.Mesh(new THREE.BoxGeometry(0.52, 0.52, 0.52), mat(skinLight));
+    head.position.y = 1.78;
+    group.add(head);
+
+    // Augen (kleine schwarze Punkte vorn)
+    const eyeMat = new THREE.MeshBasicMaterial({ color: 0x111111 });
+    const eyeL = new THREE.Mesh(new THREE.BoxGeometry(0.08, 0.08, 0.02), eyeMat);
+    eyeL.position.set(-0.11, 1.82, 0.26);
+    group.add(eyeL);
+    const eyeR = new THREE.Mesh(new THREE.BoxGeometry(0.08, 0.08, 0.02), eyeMat);
+    eyeR.position.set(0.11, 1.82, 0.26);
+    group.add(eyeR);
+
+    // Mund (kleiner dunkler Streifen)
+    const mouth = new THREE.Mesh(new THREE.BoxGeometry(0.16, 0.03, 0.02), eyeMat);
+    mouth.position.set(0, 1.66, 0.26);
+    group.add(mouth);
+
+    // Haare (dunkler Streifen oben)
+    const hair = new THREE.Mesh(new THREE.BoxGeometry(0.54, 0.10, 0.54), mat(skinDark));
+    hair.position.y = 2.00;
+    group.add(hair);
+
+    // Arme (Pivot oben, damit sie schwingen können)
+    function makeArm(side) {
+      const pivot = new THREE.Group();
+      pivot.position.set(side * 0.40, 1.48, 0);
+      const arm = new THREE.Mesh(new THREE.BoxGeometry(0.20, 0.66, 0.20), mat(skinColor));
+      arm.position.y = -0.33;
+      pivot.add(arm);
+      // Hand
+      const hand = new THREE.Mesh(new THREE.BoxGeometry(0.20, 0.14, 0.20), mat(skinLight));
+      hand.position.y = -0.66;
+      pivot.add(hand);
+      return pivot;
+    }
+    const armL = makeArm(-1);
+    const armR = makeArm(1);
+    group.add(armL, armR);
+
+    // Beine (Pivot oben)
+    function makeLeg(side) {
+      const pivot = new THREE.Group();
+      pivot.position.set(side * 0.14, 0.78, 0);
+      const leg = new THREE.Mesh(new THREE.BoxGeometry(0.22, 0.62, 0.22), mat(pantsColor));
+      leg.position.y = -0.31;
+      pivot.add(leg);
+      // Schuh
+      const shoe = new THREE.Mesh(new THREE.BoxGeometry(0.23, 0.14, 0.28), mat(shoesColor));
+      shoe.position.set(0, -0.62, 0.03);
+      pivot.add(shoe);
+      return pivot;
+    }
+    const legL = makeLeg(-1);
+    const legR = makeLeg(1);
+    group.add(legL, legR);
+
+    // Namensschild
+    group.add(makeTag(name));
+
+    return {
+      group,
+      target: new THREE.Vector3(0, 0, 0),
+      yaw: 0,
+      lastSeen: Date.now(),
+      name: name,
+      armL, armR, legL, legR,
+      animPhase: 0,
+      lastPos: new THREE.Vector3(0, 0, 0),
+      speed: 0
+    };
   }
 
   function pruneOthers() {
@@ -526,7 +737,7 @@
     }
   }
 
-  // -------- Steuerung --------
+  // ============ STEUERUNG ============
   function bindControls() {
     addEventListener('keydown', function (e) {
       if (e.repeat) return;
@@ -534,7 +745,7 @@
       if (e.code === 'Space') e.preventDefault();
       if (e.code.indexOf('Digit') === 0) {
         const n = +e.code.slice(5);
-        if (n >= 1 && n <= 5) { selected = n; updateHotbar(); }
+        if (n >= 1 && n <= 8) { selected = n; updateHotbar(); }
       }
     });
     addEventListener('keyup', function (e) { keys[e.code] = false; });
@@ -597,7 +808,7 @@
   function bindTouch() {
     const stick = document.getElementById('stick');
     const knob = document.getElementById('knob');
-    let sid = null, cx = 0, cy = 0, R = 65;
+    let sid = null, cx = 0, cy = 0, R = 70;
 
     function move(t) {
       let dx = t.clientX - cx, dy = t.clientY - cy;
@@ -624,7 +835,7 @@
       for (const t of e.changedTouches) if (t.identifier === sid) move(t);
     }, { passive: false });
 
-    function end(e) {
+    function endStick(e) {
       for (const t of e.changedTouches) {
         if (t.identifier === sid) {
           sid = null; tc.strafe = 0; tc.fwd = 0;
@@ -632,9 +843,10 @@
         }
       }
     }
-    stick.addEventListener('touchend', end);
-    stick.addEventListener('touchcancel', end);
+    stick.addEventListener('touchend', endStick);
+    stick.addEventListener('touchcancel', endStick);
 
+    // Umsehen-Bereich
     const look = document.getElementById('look');
     let lid = null, lx = 0, ly = 0;
     look.addEventListener('touchstart', function (e) {
@@ -652,22 +864,44 @@
         lx = t.clientX; ly = t.clientY;
       }
     }, { passive: false });
-    function lend(e) {
+    function endLook(e) {
       for (const t of e.changedTouches) if (t.identifier === lid) lid = null;
     }
-    look.addEventListener('touchend', lend);
-    look.addEventListener('touchcancel', lend);
+    look.addEventListener('touchend', endLook);
+    look.addEventListener('touchcancel', endLook);
 
+    // SPRUNG-Button: bei Touchstart an, bei Touchend aus
+    const jumpBtn = document.getElementById('jumpBtn');
+    let jumpTouchId = null;
+    jumpBtn.addEventListener('touchstart', function (e) {
+      e.preventDefault();
+      jumpTouchId = e.changedTouches[0].identifier;
+      kb.jump = true;
+      jumpBtn.textContent = '▲';
+    }, { passive: false });
+    function endJump(e) {
+      for (const t of e.changedTouches) {
+        if (t.identifier === jumpTouchId) {
+          kb.jump = false;
+          jumpTouchId = null;
+          jumpBtn.textContent = '▲ SPRUNG';
+        }
+      }
+    }
+    jumpBtn.addEventListener('touchend', endJump);
+    jumpBtn.addEventListener('touchcancel', endJump);
+
+    // Aktion-Buttons
     function tap(id, fn) {
       const el = document.getElementById(id);
       el.addEventListener('touchstart', function (e) { e.preventDefault(); fn(); }, { passive: false });
     }
     tap('breakBtn', doBreak);
     tap('placeBtn', doPlace);
-    tap('cycleBtn', function () { selected = selected % 5 + 1; updateHotbar(); });
+    tap('cycleBtn', function () { selected = selected % 8 + 1; updateHotbar(); });
   }
 
-  // -------- MQTT Multiplayer --------
+  // ============ MQTT ============
   function setStatus(txt, cls) {
     const el = document.getElementById('status');
     el.textContent = txt;
@@ -675,8 +909,8 @@
   }
 
   function connectMultiplayer(room) {
-    setStatus('Verbinde mit Raum "' + room + '"...');
-    roomTopic = 'mcclone3d/' + room;
+    setStatus('Verbinde...');
+    roomTopic = 'mcclone3d_v2/' + room;
 
     try {
       mqttClient = mqtt.connect('wss://broker.emqx.io:8084/mqtt', {
@@ -686,22 +920,18 @@
         reconnectPeriod: 3000
       });
     } catch (err) {
-      setStatus('MQTT-Fehler: ' + err.message, 'bad');
+      setStatus('MQTT-Fehler', 'bad');
       return;
     }
 
     mqttClient.on('connect', function () {
-      setStatus('Verbunden · Raum: ' + room, 'ok');
+      setStatus('● Raum: ' + room, 'ok');
       mqttClient.subscribe(roomTopic + '/#', { qos: 0 });
-      // Sofort eigene Position senden
       sendPosition(true);
     });
 
     mqttClient.on('reconnect', function () { setStatus('Verbinde neu...'); });
-    mqttClient.on('error', function (e) {
-      setStatus('Verbindungsfehler', 'bad');
-      console.error(e);
-    });
+    mqttClient.on('error', function () { setStatus('Verbindungsfehler', 'bad'); });
 
     mqttClient.on('message', function (topic, payload) {
       let data;
@@ -711,27 +941,22 @@
       if (topic.endsWith('/pos')) {
         let o = others.get(data.id);
         if (!o) {
-          o = createOther(data.id, data.name, data.x, data.y, data.z, data.yaw);
+          o = makeCharacter(data.id, data.name || 'Spieler');
+          o.group.position.set(data.x, data.y, data.z);
+          o.lastPos.set(data.x, data.y, data.z);
+          scene.add(o.group);
           others.set(data.id, o);
         }
         o.target.set(data.x, data.y, data.z);
         o.yaw = data.yaw || 0;
         o.lastSeen = Date.now();
-        if (data.name && data.name !== o.name) {
-          o.name = data.name;
-          // Tag neu bauen
-          o.group.remove(o.group.children[o.group.children.length - 1]);
-          o.group.add(makeTag(data.name));
-        }
       } else if (topic.endsWith('/block')) {
         applyBlock(data.x, data.y, data.z, data.t);
       } else if (topic.endsWith('/hello')) {
-        // Ein neuer Spieler ist da — wir antworten
         sendPosition(true);
       }
     });
 
-    // Begrüßung
     setTimeout(function () {
       if (mqttClient && mqttClient.connected) {
         mqttClient.publish(roomTopic + '/hello', JSON.stringify({ id: myId }));
@@ -754,16 +979,17 @@
     }));
   }
 
-  // -------- Loop --------
+  // ============ LOOP ============
   let last = 0;
 
   function loop(now) {
     const raw = Math.min((now - last) / 1000, 0.25);
+    const dt = raw;
     last = now;
 
     kb.fwd = (keys.KeyW ? 1 : 0) - (keys.KeyS ? 1 : 0);
     kb.strafe = (keys.KeyD ? 1 : 0) - (keys.KeyA ? 1 : 0);
-    kb.jump = !!keys.Space;
+    kb.jump = kb.jump || !!keys.Space;
     kb.sprint = !!(keys.ShiftLeft || keys.ShiftRight);
 
     let remaining = raw;
@@ -785,24 +1011,46 @@
       highlight.visible = false;
     }
 
+    // Andere Spieler animieren
     for (const o of others.values()) {
+      const before = o.group.position.clone();
       o.group.position.lerp(o.target, 0.25);
       o.group.rotation.y = o.yaw;
+
+      // Geschwindigkeit aus Positionsänderung berechnen
+      const moved = o.group.position.distanceTo(o.lastPos);
+      o.lastPos.copy(o.group.position);
+      o.speed = moved / Math.max(dt, 0.001);
+
+      // Lauf-Animation
+      if (o.speed > 0.5) {
+        o.animPhase += dt * (8 + o.speed * 0.6);
+        const swing = Math.sin(o.animPhase) * 0.7;
+        o.legL.rotation.x = swing;
+        o.legR.rotation.x = -swing;
+        o.armL.rotation.x = -swing * 0.8;
+        o.armR.rotation.x = swing * 0.8;
+      } else {
+        // zurück zur Ruheposition
+        o.legL.rotation.x *= 0.85;
+        o.legR.rotation.x *= 0.85;
+        o.armL.rotation.x *= 0.85;
+        o.armR.rotation.x *= 0.85;
+      }
     }
 
     sendPosition(false);
-
     renderer.render(scene, camera);
     requestAnimationFrame(loop);
   }
 
-  // -------- Start --------
+  // ============ START ============
   document.getElementById('playBtn').addEventListener('click', function () {
     myName = (document.getElementById('nameInput').value || 'Spieler').trim().slice(0, 14);
     const room = (document.getElementById('roomInput').value || 'liebe123').trim().toLowerCase().replace(/[^a-z0-9_-]/g, '');
     if (!room) { alert('Bitte Raum-Code eingeben.'); return; }
 
-    generateWorld(room); // gleicher Seed pro Raum = gleiche Landschaft
+    generateWorld(room);
     boot();
     connectMultiplayer(room);
   });
